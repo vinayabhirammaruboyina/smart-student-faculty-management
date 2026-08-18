@@ -44,6 +44,26 @@
   --color-danger: #F43F5E;
   --color-brand: #4F46E5;
   --color-brand-light: #6366F1;
+
+  /* Google Stitch Theme Colors */
+  --color-surface-dim: #051424;
+  --color-surface-container-lowest: #010f1f;
+  --color-surface-container-low: #0d1c2d;
+  --color-surface-container: #122131;
+  --color-surface-container-high: #1c2b3c;
+  --color-surface-container-highest: #273647;
+  --color-surface: #051424;
+  --color-surface-variant: #273647;
+  --color-primary: #c3c0ff;
+  --color-primary-container: #3730a3;
+  --color-on-primary-container: #a9a7ff;
+  --color-outline: #918f9e;
+  --color-outline-variant: #464553;
+  --color-on-surface: #d4e4fa;
+  --color-on-surface-variant: #c8c4d5;
+  --color-error: #ffb4ab;
+  --color-tertiary: #ffb694;
+  --color-secondary: #c0c6db;
 }
 
 *, *::before, *::after {
