@@ -66,15 +66,15 @@ body {
 }
 
 .dark body {
-  background-color: #090D16;
-  color: #F8FAFC;
+  background-color: #051424;
+  color: #d4e4fa;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-.dark ::-webkit-scrollbar-thumb { background: #1e293b; }
+.dark ::-webkit-scrollbar-thumb { background: #122131; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 /* Animations */
@@ -120,7 +120,7 @@ body {
   border-radius: 0.375rem;
 }
 .dark .skeleton {
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(90deg, #0d1c2d 25%, #1c2b3c 50%, #0d1c2d 75%);
   background-size: 1000px 100%;
 }
 
@@ -132,7 +132,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .dark .glass {
-  background: rgba(17, 24, 39, 0.75);
+  background: rgba(18, 33, 49, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -169,7 +169,7 @@ body {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 .dark .input-base {
-  background: #111827;
+  background: #010f1f;
   border-color: rgba(255, 255, 255, 0.08);
   color: #f1f5f9;
 }
@@ -182,7 +182,63 @@ body {
 .transition-base { transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 .transition-smooth { transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1); }
 
-.surface-dark { background: #111827; border: 1px solid rgba(255, 255, 255, 0.08); }
+.surface-dark { background: #122131; border: 1px solid rgba(255, 255, 255, 0.08); }
 
 /* Page enter */
 .page-enter { animation: fadeIn 0.25s ease forwards; }
+
+/* Lumina Academic custom styles (Stitch Spec) */
+.glass-panel {
+  background: rgba(18, 33, 49, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card {
+  background: rgba(18, 33, 49, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.canvas-card {
+  background: rgba(18, 33, 49, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.input-punched {
+  background-color: #010f1f;
+  border: 1px solid #273647;
+  color: #d4e4fa;
+  transition: all 0.2s ease;
+}
+
+.input-punched:focus {
+  outline: none;
+  border-color: #c3c0ff;
+  box-shadow: 0 0 0 2px rgba(195, 192, 255, 0.2);
+}
+
+.bg-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.table-row-hover:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.glass-card-hover:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.metric-accent {
+  border-left: 3px solid #6366f1;
+}
+

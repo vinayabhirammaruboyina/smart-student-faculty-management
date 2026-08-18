@@ -1,171 +1,299 @@
 import { useState, useEffect } from 'react';
-import { Users, Calendar, ClipboardList, FileText, ArrowUpRight } from 'lucide-react';
-import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 import { useAuth } from '../../context/AuthContext';
-import { useCountUp } from '../../hooks/useCountUp';
-import Card, { CardHeader, CardTitle } from '../../components/ui/Card';
-import Badge from '../../components/ui/Badge';
-import Button from '../../components/ui/Button';
-import Avatar from '../../components/ui/Avatar';
-import { SkeletonCard } from '../../components/common/SkeletonLoader';
-import { mockFacultyLeaveRequests } from '../../data/leave';
-import { todaySchedule } from '../../data/timetable';
 import { useNavigate } from 'react-router-dom';
-
-const getGreeting = () => {
-  const h = new Date().getHours();
-  if (h < 12) return 'Good Morning';
-  if (h < 17) return 'Good Afternoon';
-  return 'Good Evening';
-};
+import { FileText, FlaskConical, HelpCircle, ArrowRight, TrendingUp } from 'lucide-react';
+import { useCountUp } from '../../hooks/useCountUp';
 
 export default function FacultyDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const pendingLeave = mockFacultyLeaveRequests.filter(l => l.status === 'pending');
-  const studentsCount = useCountUp(124, 1200, !loading);
-  const classesCount = useCountUp(5, 800, !loading);
+
+  const studentsCount = useCountUp(1432, 1200, !loading);
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(t);
   }, []);
 
-  const pieData = [
-    { name: 'Submitted', value: 36, color: '#10b981' }, // emerald
-    { name: 'Pending', value: 6, color: '#f59e0b' }    // amber
-  ];
-
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="skeleton h-16 w-72 rounded-xl" />
-        <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
+        <div className="h-16 w-72 bg-surface-container rounded-xl animate-pulse" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => <div key={i} className="h-32 bg-surface-container rounded-lg animate-pulse" />)}
         </div>
       </div>
     );
   }
 
-  const stats = [
-    { label: 'Total Students', value: studentsCount, icon: Users, color: 'indigo', to: '/faculty/students' },
-    { label: 'Classes Today', value: classesCount, icon: Calendar, color: 'blue', to: '/faculty/classes' },
-    { label: 'Pending Reviews', value: 12, icon: ClipboardList, color: 'amber', to: '/faculty/submissions' },
-    { label: 'Leave Requests', value: pendingLeave.length, icon: FileText, color: 'red', to: '/faculty/leave' },
-  ];
-
-  const colorMap = {
-    indigo: 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400',
-    blue: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
-    amber: 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400',
-    red: 'bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400'
-  };
-
   return (
-    <div className="space-y-6 max-w-7xl">
-      <div className="flex items-start justify-between flex-wrap gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-            {getGreeting()}, Professor {user?.name?.split(' ').slice(-1)[0]} 👋
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Here's your academic overview for today.</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="secondary" size="sm" onClick={() => navigate('/faculty/attendance')}>Take Attendance</Button>
-          <Button size="sm" onClick={() => navigate('/faculty/qr-attendance')}>Generate QR</Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
-        {stats.map((s) => {
-          const Icon = s.icon;
-          return (
-            <Card key={s.label} hover onClick={() => navigate(s.to)} className="cursor-pointer">
-              <div className="flex items-start justify-between mb-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorMap[s.color]}`}>
-                  <Icon size={20} />
-                </div>
-                <ArrowUpRight size={16} className="text-slate-300 dark:text-slate-600" />
-              </div>
-              <p className="text-2xl font-bold text-slate-900 dark:text-white">{s.value}</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{s.label}</p>
-            </Card>
-          );
-        })}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Today's schedule */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Today's Schedule</CardTitle>
-            <Badge variant="primary">{todaySchedule.length} classes</Badge>
-          </CardHeader>
-          <div className="space-y-3">
-            {todaySchedule.slice(0, 4).map((cls, i) => (
-              <div key={i} className={`flex gap-3 p-3 rounded-xl border ${cls.status === 'current' ? 'border-indigo-300 bg-indigo-50/50 dark:bg-indigo-900/10 dark:border-indigo-850' : 'border-slate-100 dark:border-slate-700'}`}>
-                <div className="shrink-0 text-right min-w-[70px]">
-                  <p className="text-xs font-bold text-slate-700 dark:text-slate-300">{cls.time.split(' - ')[0]}</p>
-                  <p className="text-xs text-slate-400">{cls.time.split(' - ')[1]}</p>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">{cls.subject}</p>
-                  <p className="text-xs text-slate-400">{cls.room} · {cls.code}</p>
-                </div>
-                <Button size="xs" variant="secondary" onClick={() => navigate('/faculty/attendance')}>Mark</Button>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Submissions chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Assignment Submissions</CardTitle>
-            <Button size="xs" variant="ghost" onClick={() => navigate('/faculty/submissions')}>View All</Button>
-          </CardHeader>
-          <div className="h-44">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={pieData} cx="50%" cy="50%" innerRadius={50} outerRadius={75} paddingAngle={3} dataKey="value">
-                  {pieData.map((entry, index) => <Cell key={index} fill={entry.color} />)}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-2 text-center">
-            <p className="text-2xl font-bold text-slate-900 dark:text-white">36 / 42</p>
-            <p className="text-sm text-slate-400">students submitted</p>
-          </div>
-        </Card>
-      </div>
-
-      {/* Leave request previews */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Pending Leave Requests</CardTitle>
-          <Button size="xs" variant="ghost" onClick={() => navigate('/faculty/leave')}>View all</Button>
-        </CardHeader>
-        <div className="space-y-3">
-          {pendingLeave.map((req) => (
-            <div key={req.id} className="flex items-center gap-3 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
-              <Avatar name={req.studentName} size="sm" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-slate-800 dark:text-white">{req.studentName}</p>
-                <p className="text-xs text-slate-400">{req.type} · {req.fromDate} to {req.toDate}</p>
-              </div>
-              <Badge variant="warning">Pending</Badge>
-              <Button size="xs" onClick={() => navigate('/faculty/leave')}>Review</Button>
+    <div className="p-4 md:p-6 bg-background min-h-screen text-on-surface font-body-md">
+      <div className="max-w-[1440px] mx-auto space-y-4">
+        
+        {/* Metrics Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Metric Card 1 */}
+          <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg p-4 relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Total Students</span>
             </div>
-          ))}
-          {pendingLeave.length === 0 && (
-            <p className="text-sm text-slate-450 text-center py-4">No pending leave requests</p>
-          )}
+            <div className="text-3xl font-bold text-on-surface font-mono">{studentsCount.toLocaleString()}</div>
+            <div className="mt-2 text-[10px] flex items-center gap-1 text-on-surface">
+              <TrendingUp size={12} className="text-[#34d399]" />
+              <span className="text-[#34d399]">+5.2%</span> from last semester
+            </div>
+          </div>
+
+          {/* Metric Card 2 */}
+          <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg p-4 relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Avg Class Perf</span>
+            </div>
+            <div className="text-3xl font-bold text-on-surface font-mono">84.5<span className="text-xl">%</span></div>
+            <div className="mt-2 text-[10px] text-on-surface-variant">
+              Across 4 active courses
+            </div>
+          </div>
+
+          {/* Metric Card 3 */}
+          <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg p-4 relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Pending Grading</span>
+            </div>
+            <div className="text-3xl font-bold text-error font-mono">48</div>
+            <div className="mt-2 text-[10px] text-on-surface-variant">
+              Requires action this week
+            </div>
+          </div>
+
+          {/* Metric Card 4 */}
+          <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg p-4 relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Active Research</span>
+            </div>
+            <div className="text-3xl font-bold text-on-surface font-mono">03</div>
+            <div className="mt-2 text-[10px] text-on-surface-variant">
+              2 pending publication
+            </div>
+          </div>
         </div>
-      </Card>
+
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          
+          {/* Main Content Column (2 spans) */}
+          <div className="lg:col-span-2 space-y-4">
+            
+            {/* Course Overview */}
+            <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg flex flex-col">
+              <div className="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+                <h2 className="text-xl font-semibold text-on-surface flex items-center gap-2">
+                  Course Overview
+                </h2>
+                <button onClick={() => navigate('/faculty/classes')} className="text-primary hover:text-primary-fixed transition-colors text-[10px] uppercase flex items-center gap-1">
+                  View All <ArrowRight size={12} />
+                </button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-outline-variant text-[10px] text-on-surface-variant uppercase tracking-wider bg-[#151f2e]">
+                      <th className="p-2 pl-4 font-medium">Course Code &amp; Title</th>
+                      <th className="p-2 font-medium">Enrollment</th>
+                      <th className="p-2 font-medium">Next Lecture</th>
+                      <th className="p-2 font-medium">Trend</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-[12px]">
+                    <tr className="border-b border-outline-variant/30 hover:bg-white/5 transition-colors cursor-pointer">
+                      <td className="p-2 pl-4">
+                        <div className="font-medium text-on-surface font-mono">SUB-701</div>
+                        <div className="text-on-surface-variant text-xs truncate max-w-[200px]">Introduction to Physics</div>
+                      </td>
+                      <td className="p-2 font-mono text-on-surface">124</td>
+                      <td className="p-2 text-on-surface-variant">Mon, 10:00 AM</td>
+                      <td className="p-2">
+                        <div className="w-16 h-4 bg-surface-container-high rounded overflow-hidden flex items-end">
+                          <div className="w-1/5 bg-primary/40 h-[40%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/60 h-[60%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/80 h-[50%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary h-[80%] ml-0.5"></div>
+                          <div className="w-1/5 bg-[#34d399] h-[90%] ml-0.5"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-outline-variant/30 hover:bg-white/5 transition-colors cursor-pointer">
+                      <td className="p-2 pl-4">
+                        <div className="font-medium text-on-surface font-mono">ENG-302</div>
+                        <div className="text-on-surface-variant text-xs truncate max-w-[200px]">Advanced Thermodynamics</div>
+                      </td>
+                      <td className="p-2 font-mono text-on-surface">68</td>
+                      <td className="p-2 text-on-surface-variant">Tue, 14:00 PM</td>
+                      <td className="p-2">
+                        <div className="w-16 h-4 bg-surface-container-high rounded overflow-hidden flex items-end">
+                          <div className="w-1/5 bg-primary/80 h-[70%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/60 h-[60%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/40 h-[50%] ml-0.5"></div>
+                          <div className="w-1/5 bg-error/80 h-[30%] ml-0.5"></div>
+                          <div className="w-1/5 bg-error h-[20%] ml-0.5"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-white/5 transition-colors cursor-pointer">
+                      <td className="p-2 pl-4">
+                        <div className="font-medium text-on-surface font-mono">RES-900</div>
+                        <div className="text-on-surface-variant text-xs truncate max-w-[200px]">Thesis Seminar</div>
+                      </td>
+                      <td className="p-2 font-mono text-on-surface">12</td>
+                      <td className="p-2 text-on-surface-variant">Thu, 09:00 AM</td>
+                      <td className="p-2">
+                        <div className="w-16 h-4 bg-surface-container-high rounded overflow-hidden flex items-end">
+                          <div className="w-1/5 bg-primary/60 h-[80%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/60 h-[85%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/60 h-[82%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary/60 h-[88%] ml-0.5"></div>
+                          <div className="w-1/5 bg-primary h-[95%] ml-0.5"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Grading Queue */}
+            <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg flex flex-col">
+              <div className="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+                <h2 className="text-xl font-semibold text-on-surface flex items-center gap-2">
+                  Grading Queue
+                </h2>
+                <span className="bg-error text-on-error text-[10px] font-medium px-2 py-0.5 rounded-full">48 Pending</span>
+              </div>
+              <div className="p-2 space-y-2">
+                
+                {/* Queue Item */}
+                <div className="flex justify-between items-center p-2 hover:bg-surface-container-high rounded transition-colors border border-transparent hover:border-outline-variant/50">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-primary">
+                      <FileText size={16} />
+                    </div>
+                    <div>
+                      <div className="text-[12px] font-medium text-on-surface">Midterm Essay</div>
+                      <div className="text-[10px] text-on-surface-variant flex gap-2">
+                        <span className="font-mono">ASN-8092-A</span> • <span className="font-mono">USR-2026</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-error flex items-center gap-1">
+                      2 days overdue
+                    </span>
+                    <button onClick={() => navigate('/faculty/submissions')} className="bg-transparent border border-outline text-on-surface text-[10px] font-medium px-3 py-1 rounded hover:bg-surface-container-highest transition-colors">Grade</button>
+                  </div>
+                </div>
+
+                {/* Queue Item */}
+                <div className="flex justify-between items-center p-2 hover:bg-surface-container-high rounded transition-colors border border-transparent hover:border-outline-variant/50">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-primary">
+                      <FlaskConical size={16} />
+                    </div>
+                    <div>
+                      <div className="text-[12px] font-medium text-on-surface">Lab Report 3</div>
+                      <div className="text-[10px] text-on-surface-variant flex gap-2">
+                        <span className="font-mono">ASN-8105-B</span> • <span className="font-mono">USR-2144</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-on-surface-variant">Due tomorrow</span>
+                    <button onClick={() => navigate('/faculty/submissions')} className="bg-transparent border border-outline text-on-surface text-[10px] font-medium px-3 py-1 rounded hover:bg-surface-container-highest transition-colors">Grade</button>
+                  </div>
+                </div>
+
+                {/* Queue Item */}
+                <div className="flex justify-between items-center p-2 hover:bg-surface-container-high rounded transition-colors border border-transparent hover:border-outline-variant/50">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-primary">
+                      <HelpCircle size={16} />
+                    </div>
+                    <div>
+                      <div className="text-[12px] font-medium text-on-surface">Quiz 4</div>
+                      <div className="text-[10px] text-on-surface-variant flex gap-2">
+                        <span className="font-mono">ASN-8110-Q</span> • <span className="font-mono">USR-1998</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-on-surface-variant">Due in 3 days</span>
+                    <button onClick={() => navigate('/faculty/submissions')} className="bg-transparent border border-outline text-on-surface text-[10px] font-medium px-3 py-1 rounded hover:bg-surface-container-highest transition-colors">Grade</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column (1 span) */}
+          <div className="space-y-4">
+            {/* Analytics Card */}
+            <div className="canvas-card bg-[#111827] border border-[#1F2937] rounded-lg flex flex-col h-full min-h-[300px]">
+              <div className="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+                <h2 className="text-xl font-semibold text-on-surface flex items-center gap-2">
+                  Grade Distribution
+                </h2>
+              </div>
+              <div className="p-4 flex-1 flex flex-col justify-center relative">
+                
+                {/* Simulated Chart Graphic */}
+                <div className="relative w-48 h-48 mx-auto">
+                  {/* A purely CSS representation of a donut chart */}
+                  <div className="absolute inset-0 rounded-full border-8 border-surface-container-highest"></div>
+                  {/* Segments (Simulated via SVG) */}
+                  <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle className="transition-all duration-1000 ease-out" cx="50" cy="50" fill="transparent" r="40" stroke="#34d399" strokeDasharray="251.2" strokeDashoffset="62.8" strokeWidth="12"></circle>
+                    <circle className="origin-center rotate-[90deg]" cx="50" cy="50" fill="transparent" r="40" stroke="#c3c0ff" strokeDasharray="100 251.2" strokeDashoffset="150" strokeWidth="12"></circle>
+                    <circle className="origin-center rotate-[190deg]" cx="50" cy="50" fill="transparent" r="40" stroke="#c0c6db" strokeDasharray="50 251.2" strokeDashoffset="200" strokeWidth="12"></circle>
+                    <circle className="origin-center rotate-[240deg]" cx="50" cy="50" fill="transparent" r="40" stroke="#ffb4ab" strokeDasharray="21.2 251.2" strokeDashoffset="230" strokeWidth="12"></circle>
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-3xl font-bold text-on-surface font-mono">84.5</span>
+                    <span className="text-[10px] font-medium text-on-surface-variant">Mean Score</span>
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-2 gap-2 text-[10px]">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#34d399]"></div>
+                    <span className="text-on-surface-variant">A (75%)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-primary"></div>
+                    <span className="text-on-surface-variant">B (40%)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                    <span className="text-on-surface-variant">C (20%)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-error"></div>
+                    <span className="text-on-surface-variant">D/F (8%)</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
     </div>
   );
 }
