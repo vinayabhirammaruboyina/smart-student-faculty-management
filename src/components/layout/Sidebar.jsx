@@ -164,7 +164,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
               const Icon = link.icon;
               return (
                 <NavLink
-                  key={link.to}
+                  key={`${link.to}-${link.label}`}
                   to={link.to}
                   onClick={onMobileClose}
                   className={({ isActive }) => `

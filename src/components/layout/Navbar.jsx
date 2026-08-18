@@ -49,13 +49,11 @@ export default function Navbar({ onMenuClick }) {
     navigate('/login');
   };
 
-  const handleSwitch = async (roleType) => {
-    const res = await switchRole(roleType);
-    if (res.success) {
-      toast.success(`Switched to ${res.user.role.toUpperCase()} mode!`);
-      navigate(`/${res.user.role}/dashboard`);
-      setRoleSwitcherOpen(false);
-    }
+  const handleSwitch = (roleType) => {
+    switchRole(roleType);
+    toast.success(`Switched to ${roleType.toUpperCase()} mode! 🎉`);
+    navigate(`/${roleType}/dashboard`);
+    setRoleSwitcherOpen(false);
   };
 
   const NavIcons = () => (
