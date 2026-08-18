@@ -30,52 +30,52 @@ export default function StudentDashboard() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="h-16 w-72 bg-surface-container rounded-xl animate-pulse" />
+        <div className="h-16 w-72 bg-[#0B101E] rounded-xl animate-pulse" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-24 bg-surface-container rounded-lg animate-pulse" />
+            <div key={i} className="h-24 bg-[#0B101E] rounded-lg animate-pulse" />
           ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-          <div className="md:col-span-8 h-64 bg-surface-container rounded-lg animate-pulse" />
-          <div className="md:col-span-4 h-64 bg-surface-container rounded-lg animate-pulse" />
+          <div className="md:col-span-8 h-64 bg-[#0B101E] rounded-lg animate-pulse" />
+          <div className="md:col-span-4 h-64 bg-[#0B101E] rounded-lg animate-pulse" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-4 md:p-6 bg-background min-h-screen text-on-surface font-body-md">
+    <div className="text-slate-200">
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-semibold font-headline-lg">Welcome back, {user?.name?.split(' ')[0] || 'Student'}</h1>
-        <p className="text-on-surface-variant mt-1 text-sm">Here is your academic overview for the current semester.</p>
+        <h1 className="text-2xl font-bold text-white tracking-tight">Welcome back, {user?.name?.split(' ')[0] || 'Student'}</h1>
+        <p className="text-slate-400 mt-1 text-sm">Here is your academic overview for the current semester.</p>
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-6">
-        <div className="glass-card rounded-lg p-4 flex flex-col relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
-          <span className="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider mb-1">Cumulative GPA</span>
-          <span className="text-2xl font-bold text-on-surface">{(gpaRaw / 10).toFixed(2)}</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 border-l-2 border-l-[#6366F1] flex flex-col justify-between">
+          <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mb-2">Cumulative GPA</span>
+          <span className="text-3xl font-extrabold text-white">{(gpaRaw / 10).toFixed(2)}</span>
+          <span className="text-[10px] font-mono text-slate-500 mt-2">Target: 3.80</span>
         </div>
         
-        <div className="glass-card rounded-lg p-4 flex flex-col relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
-          <span className="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider mb-1">Attendance</span>
-          <span className="text-2xl font-bold text-on-surface">{attendanceCount}%</span>
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 border-l-2 border-l-[#F59E0B] flex flex-col justify-between">
+          <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mb-2">Attendance</span>
+          <span className="text-3xl font-extrabold text-white">{attendanceCount}%</span>
+          <span className="text-[10px] font-mono text-slate-500 mt-2">Required: 75%</span>
         </div>
         
-        <div className="glass-card rounded-lg p-4 flex flex-col relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
-          <span className="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider mb-1">Credits Earned</span>
-          <span className="text-2xl font-bold text-on-surface">86/120</span>
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 border-l-2 border-l-[#818CF8] flex flex-col justify-between">
+          <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mb-2">Credits Earned</span>
+          <span className="text-3xl font-extrabold text-white">86<span className="text-lg text-slate-400">/120</span></span>
+          <span className="text-[10px] font-mono text-slate-500 mt-2">On track for graduation</span>
         </div>
         
-        <div className="glass-card rounded-lg p-4 flex flex-col relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
-          <span className="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider mb-1">Pending Tasks</span>
-          <span className="text-2xl font-bold text-on-surface">{allDueAssignments.length}</span>
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 border-l-2 border-l-[#F43F5E] flex flex-col justify-between">
+          <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mb-2">Pending Tasks</span>
+          <span className="text-3xl font-extrabold text-white">{allDueAssignments.length}</span>
+          <span className="text-[10px] font-mono text-slate-500 mt-2">{overdueAssignments.length} overdue</span>
         </div>
       </div>
 
@@ -83,33 +83,33 @@ export default function StudentDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         
         {/* Upcoming Deadlines (Span 8) */}
-        <div className="glass-card rounded-lg flex flex-col md:col-span-8">
-          <div className="p-4 border-b border-outline-variant flex justify-between items-center">
-            <h3 className="text-xl font-semibold text-on-surface">Upcoming Deadlines</h3>
-            <button onClick={() => navigate('/student/assignments')} className="text-primary text-[12px] font-medium hover:underline">View All</button>
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 flex flex-col md:col-span-8">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-white">Upcoming Deadlines</h3>
+            <button onClick={() => navigate('/student/assignments')} className="text-indigo-400 hover:text-indigo-300 text-xs font-medium">View All</button>
           </div>
           <div className="flex-1 overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-surface-container-low border-b border-outline-variant">
-                  <th className="p-2 pl-4 text-[10px] font-medium text-on-surface-variant uppercase tracking-wider">Task ID</th>
-                  <th className="p-2 text-[10px] font-medium text-on-surface-variant uppercase tracking-wider">Assignment</th>
-                  <th className="p-2 text-[10px] font-medium text-on-surface-variant uppercase tracking-wider">Course</th>
-                  <th className="p-2 pr-4 text-[10px] font-medium text-on-surface-variant uppercase tracking-wider text-right">Due Date</th>
+                <tr>
+                  <th className="text-[10px] font-mono text-slate-500 uppercase pb-2 border-b border-[#162039] pl-2 w-1/5">Task ID</th>
+                  <th className="text-[10px] font-mono text-slate-500 uppercase pb-2 border-b border-[#162039] w-2/5">Assignment</th>
+                  <th className="text-[10px] font-mono text-slate-500 uppercase pb-2 border-b border-[#162039] w-1/5">Course</th>
+                  <th className="text-[10px] font-mono text-slate-500 uppercase pb-2 border-b border-[#162039] text-right pr-2 w-1/5">Due Date</th>
                 </tr>
               </thead>
               <tbody>
                 {allDueAssignments.slice(0, 4).map((a, i) => (
-                  <tr key={i} className="table-row-hover border-b border-outline-variant/50 transition-colors">
-                    <td className="p-2 pl-4 text-[12px] text-on-surface font-mono">ASN-{8092 + i}</td>
-                    <td className="p-2 text-[12px] text-on-surface">{a.title}</td>
-                    <td className="p-2 text-[12px] text-on-surface-variant">{a.subject}</td>
-                    <td className={`p-2 pr-4 text-[10px] text-right ${a.status === 'overdue' ? 'text-error' : 'text-tertiary'}`}>{a.dueDate}</td>
+                  <tr key={i} className="border-b border-[#162039]/50 hover:bg-[#151D33]/30 transition-colors">
+                    <td className="py-3 pl-2 text-[11px] font-mono text-indigo-300">ASN-{8092 + i}</td>
+                    <td className="py-3 text-sm text-slate-200">{a.title}</td>
+                    <td className="py-3 text-[11px] font-mono text-slate-400">{a.subject}</td>
+                    <td className={`py-3 pr-2 text-[11px] font-mono text-right ${a.status === 'overdue' ? 'text-rose-400' : 'text-slate-400'}`}>{a.dueDate}</td>
                   </tr>
                 ))}
                 {allDueAssignments.length === 0 && (
                   <tr>
-                    <td colSpan="4" className="p-4 text-center text-sm text-on-surface-variant">No pending assignments</td>
+                    <td colSpan="4" className="py-4 text-center text-sm text-slate-500">No pending assignments</td>
                   </tr>
                 )}
               </tbody>
@@ -118,17 +118,17 @@ export default function StudentDashboard() {
         </div>
 
         {/* Current Grades (Span 4) */}
-        <div className="glass-card rounded-lg flex flex-col md:col-span-4">
-          <div className="p-4 border-b border-outline-variant">
-            <h3 className="text-xl font-semibold text-on-surface">Current Grades</h3>
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 flex flex-col md:col-span-4">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-white">Current Grades</h3>
           </div>
-          <div className="p-4 flex-1 flex flex-col gap-2">
+          <div className="flex-1 flex flex-col gap-3">
             {attendance.subjects.slice(0, 4).map((sub, i) => {
-              const gradeColors = ['text-primary', 'text-tertiary', 'text-secondary'];
+              const gradeColors = ['text-indigo-400', 'text-amber-400', 'text-[#818CF8]', 'text-rose-400'];
               const c = gradeColors[i % gradeColors.length];
               return (
-                <div key={i} className="flex justify-between items-center p-1 hover:bg-surface-container-high rounded transition-colors">
-                  <span className="text-[12px] font-medium text-on-surface font-mono truncate mr-2" title={sub.subject}>{sub.subject}</span>
+                <div key={i} className="flex justify-between items-center p-2 hover:bg-[#151D33]/50 rounded transition-colors border border-transparent hover:border-[#2A3755]">
+                  <span className="text-[11px] font-mono text-slate-300 truncate mr-2" title={sub.subject}>{sub.subject}</span>
                   <span className={`text-sm font-semibold ${c}`}>{sub.percentage}%</span>
                 </div>
               );
@@ -137,43 +137,41 @@ export default function StudentDashboard() {
         </div>
 
         {/* Quick Verification Widget (Span 4) */}
-        <div className="glass-card rounded-lg flex flex-col md:col-span-4 justify-center items-center p-6 relative overflow-hidden group">
-          {/* Subtle background texture */}
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary via-surface to-background pointer-events-none"></div>
-          <h3 className="text-xl font-semibold text-on-surface mb-1 relative z-10">Quick ID</h3>
-          <p className="text-[12px] text-on-surface-variant mb-4 text-center relative z-10">Scan for attendance &amp; building access</p>
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 flex flex-col md:col-span-4 justify-center items-center text-center">
+          <h3 className="text-lg font-semibold text-white mb-1">Quick ID</h3>
+          <p className="text-xs text-slate-500 mb-5">Scan for attendance &amp; access</p>
           
-          <div className="bg-white p-2 rounded-lg mb-4 relative z-10 shadow-[0_4px_12px_rgba(0,0,0,0.5)] transform group-hover:scale-105 transition-transform duration-300">
-            <div className="w-32 h-32 bg-black border-2 border-white flex items-center justify-center">
-              <QrCode size={64} className="text-white" />
+          <div className="w-36 h-36 bg-white rounded-lg p-2.5 mb-4 shadow-lg flex items-center justify-center">
+            <div className="w-full h-full bg-black flex items-center justify-center">
+              <QrCode size={80} className="text-white" strokeWidth={1} />
             </div>
           </div>
           
-          <div className="text-[12px] font-medium text-on-surface font-mono relative z-10">{user?.id || 'PU2023IMCA0042'}</div>
+          <div className="text-[11px] font-mono text-slate-400 mt-2">STU-2026-0891</div>
         </div>
 
         {/* Campus Announcements (Span 8) */}
-        <div className="glass-card rounded-lg flex flex-col md:col-span-8">
-          <div className="p-4 border-b border-outline-variant flex justify-between items-center">
-            <h3 className="text-xl font-semibold text-on-surface">Campus Announcements</h3>
-            <Megaphone size={20} className="text-on-surface-variant" />
+        <div className="rounded-lg bg-[#0B101E] border border-[#151D33] p-5 flex flex-col md:col-span-8">
+          <div className="flex justify-between items-center mb-4 pb-2 border-b border-[#162039]">
+            <h3 className="text-lg font-semibold text-white">Campus Announcements</h3>
+            <Megaphone size={18} className="text-slate-500" />
           </div>
-          <div className="p-4 flex flex-col gap-4 flex-1">
+          <div className="flex flex-col gap-5 flex-1">
             <div className="flex gap-4 items-start">
-              <div className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0"></div>
+              <div className="w-2 h-2 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0"></div>
               <div>
-                <h4 className="text-sm font-semibold text-on-surface">Library Hours Extension</h4>
-                <p className="text-[12px] text-on-surface-variant mt-1">The main library will be open 24/7 starting next week for midterm preparations. Ensure you have your active ID for late-night access.</p>
-                <span className="text-[10px] text-on-surface-variant mt-1 block">Posted 2 hours ago</span>
+                <h4 className="text-sm font-semibold text-slate-200">Library Hours Extension</h4>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">The main library will be open 24/7 starting next week for midterm preparations. Ensure you have your active ID for late-night access.</p>
+                <span className="text-[10px] font-mono text-slate-500 mt-2 block">POSTED 2 HOURS AGO</span>
               </div>
             </div>
             
             <div className="flex gap-4 items-start">
-              <div className="w-2 h-2 rounded-full bg-tertiary mt-1.5 flex-shrink-0"></div>
+              <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
               <div>
-                <h4 className="text-sm font-semibold text-on-surface">System Maintenance Notice</h4>
-                <p className="text-[12px] text-on-surface-variant mt-1">The assignment submission portal will undergo scheduled maintenance on Saturday from 2:00 AM to 4:00 AM. Plan your submissions accordingly.</p>
-                <span className="text-[10px] text-on-surface-variant mt-1 block">Posted Yesterday</span>
+                <h4 className="text-sm font-semibold text-slate-200">System Maintenance Notice</h4>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">The assignment submission portal will undergo scheduled maintenance on Saturday from 2:00 AM to 4:00 AM. Plan your submissions accordingly.</p>
+                <span className="text-[10px] font-mono text-slate-500 mt-2 block">POSTED YESTERDAY</span>
               </div>
             </div>
           </div>

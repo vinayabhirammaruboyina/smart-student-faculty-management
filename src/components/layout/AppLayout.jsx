@@ -16,7 +16,7 @@ export default function AppLayout() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#051424] text-slate-800 dark:text-[#d4e4fa] transition-colors duration-200 flex">
+    <div className="h-screen w-full flex bg-[#070B13] text-slate-200 overflow-hidden">
       {/* Sidebar navigation */}
       <Sidebar
         collapsed={collapsed}
@@ -25,10 +25,10 @@ export default function AppLayout() {
         onMobileClose={() => setMobileOpen(false)}
       />
       
-      {/* Main Canvas view container */}
-      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-200 ${collapsed ? 'md:pl-16' : 'md:pl-64'}`}>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 h-full">
         <Navbar onMenuClick={() => setMobileOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-[#F8FAFC] dark:bg-[#051424] animate-fade-in">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-[#070B13] animate-fade-in relative z-0">
           <Outlet />
         </main>
       </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { User, Lock, Fingerprint, ArrowRight, Eye, EyeOff, AlertTriangle } from 'lucide-react';
+import { CreditCard, Lock, Fingerprint, Eye, EyeOff, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -25,10 +25,8 @@ export default function LoginPage() {
 
   const validate = () => {
     const errs = {};
-    if (!email) errs.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(email)) errs.email = 'Enter a valid email';
-    if (!password) errs.password = 'Password is required';
-    else if (password.length < 6) errs.password = 'Minimum 6 characters';
+    if (!email) errs.email = 'Required';
+    if (!password) errs.password = 'Required';
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -54,51 +52,37 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-pattern dark bg-[#051424] text-[#d4e4fa]">
-      {/* Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-container rounded-full opacity-10 blur-[120px] pointer-events-none"></div>
-      
-      <div className="w-full max-w-md px-4 z-10">
-        {/* Brand Section */}
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-primary tracking-tight mb-2">Smart SMS</h1>
-          <p className="text-[12px] font-medium text-outline uppercase tracking-widest">Enterprise Portal</p>
+    <div className="min-h-screen bg-[#070B13] flex flex-col items-center justify-center p-4 text-slate-200">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white tracking-tight mb-1">Smart SMS</h1>
+          <p className="text-[10px] font-mono text-[#5C6E91] uppercase tracking-widest">Command Center Login</p>
         </div>
 
-        {/* Login Card */}
-        <div className="glass-panel rounded-xl p-6 relative overflow-hidden">
-          {/* Top Light Accent */}
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-          
+        <div className="bg-[#0B101E] border border-[#151D33] rounded-xl p-6 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Academic ID Field */}
             <div>
-              <label className="block text-[12px] font-medium text-on-surface-variant mb-1" htmlFor="email">Academic ID / Email</label>
+              <label className="block text-[11px] font-mono text-slate-400 mb-1" htmlFor="email">Academic ID / Email</label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-outline">
-                  <User size={18} />
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                  <CreditCard size={16} />
                 </span>
                 <input 
                   id="email"
-                  type="email" 
+                  type="text" 
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setErrors(p => ({...p, email: ''})); }}
-                  placeholder="student@example.com" 
-                  className={`input-punched w-full rounded text-[12px] py-2 pl-9 pr-3 bg-surface-container-lowest border ${errors.email ? 'border-error focus:border-error' : 'border-surface-variant focus:border-primary'} text-on-surface focus:outline-none transition-all duration-200`}
+                  placeholder="ID or Email" 
+                  className={`w-full rounded bg-white text-slate-950 text-sm py-2 pl-10 pr-3 border ${errors.email ? 'border-rose-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow`}
                 />
               </div>
-              {errors.email && <p className="mt-1 text-xs text-error">{errors.email}</p>}
             </div>
 
-            {/* Password Field */}
             <div>
-              <div className="flex justify-between items-center mb-1">
-                <label className="block text-[12px] font-medium text-on-surface-variant" htmlFor="password">Password</label>
-                <button type="button" className="text-[12px] font-medium text-primary hover:text-primary-fixed transition-colors">Forgot Password?</button>
-              </div>
+              <label className="block text-[11px] font-mono text-slate-400 mb-1" htmlFor="password">Password</label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-outline">
-                  <Lock size={18} />
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                  <Lock size={16} />
                 </span>
                 <input 
                   id="password"
@@ -106,51 +90,46 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setErrors(p => ({...p, password: ''})); }}
                   placeholder="••••••••" 
-                  className={`input-punched w-full rounded text-[12px] py-2 pl-9 pr-10 bg-surface-container-lowest border ${errors.password ? 'border-error focus:border-error' : 'border-surface-variant focus:border-primary'} text-on-surface focus:outline-none transition-all duration-200`}
+                  className={`w-full rounded bg-white text-slate-950 text-sm py-2 pl-10 pr-10 border ${errors.password ? 'border-rose-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow`}
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface">
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              {errors.password && <p className="mt-1 text-xs text-error">{errors.password}</p>}
             </div>
 
-            {/* Biometric Auth / Remember Me */}
-            <div className="flex items-center mt-2">
+            <div className="flex items-center pt-1 pb-2">
               <input 
-                id="remember" 
+                id="biometric" 
                 type="checkbox" 
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface-dim focus:ring-2 cursor-pointer"
+                className="w-4 h-4 rounded bg-[#151D33] border-[#2A3755] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-[#0B101E] cursor-pointer"
               />
-              <label htmlFor="remember" className="ml-2 flex items-center text-[12px] text-on-surface-variant cursor-pointer">
-                <Fingerprint size={16} className="mr-1 text-primary" />
-                Secure Biometric Auth
+              <label htmlFor="biometric" className="ml-2 flex items-center text-xs text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors">
+                <Fingerprint size={14} className="mr-1.5 text-indigo-400" />
+                Enable Biometric Auth
               </label>
             </div>
 
-            {/* Action Button */}
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-primary-container hover:bg-on-primary-fixed-variant text-on-primary-container text-lg font-semibold py-2 rounded transition-colors duration-200 mt-6 flex justify-center items-center disabled:opacity-50"
+              className="w-full bg-[#313C78] hover:bg-[#3D4B96] text-white rounded-md py-2 text-sm font-semibold transition-colors disabled:opacity-50"
             >
-              Sign In
-              <ArrowRight size={20} className="ml-1" />
+              Authenticate
             </button>
           </form>
 
-          {/* Demo Login Buttons */}
-          <div className="mt-8 pt-4 border-t border-white/5">
-            <p className="text-center text-[10px] text-outline uppercase tracking-widest mb-3">Demo Accounts</p>
-            <div className="flex justify-center gap-2">
+          <div className="mt-6 pt-6 border-t border-[#141C2E]">
+            <p className="text-center text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-3">Demo Access</p>
+            <div className="grid grid-cols-3 gap-2">
               {DEMO_ACCOUNTS.map((acc) => (
                 <button
                   key={acc.role}
                   onClick={() => handleDemoLogin(acc.role)}
                   disabled={loading}
-                  className="px-3 py-1.5 rounded bg-surface-container-lowest border border-outline-variant text-[12px] text-on-surface hover:bg-surface-container hover:border-primary transition-all disabled:opacity-50"
+                  className="px-2 py-1.5 rounded-md bg-[#151D33] hover:bg-[#1E293B] text-xs font-medium text-slate-300 transition-colors border border-[#2A3755]"
                 >
                   {acc.label}
                 </button>
@@ -159,10 +138,9 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-10 text-center flex flex-col items-center justify-center opacity-60">
-          <AlertTriangle size={24} className="text-error mb-1" />
-          <p className="text-[10px] text-outline uppercase tracking-widest font-medium">
+        <div className="mt-8 text-center flex flex-col items-center justify-center text-rose-500/80">
+          <AlertTriangle size={20} className="mb-2" />
+          <p className="text-[10px] font-mono tracking-widest font-semibold uppercase">
             Authorized Personnel Only
           </p>
         </div>
