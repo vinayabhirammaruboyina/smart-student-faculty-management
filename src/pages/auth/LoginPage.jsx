@@ -53,60 +53,58 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#070B13] flex flex-col items-center justify-center p-4 text-slate-200">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white tracking-tight mb-1">Smart SMS</h1>
-          <p className="text-[10px] font-mono text-[#5C6E91] uppercase tracking-widest">Command Center Login</p>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Smart SMS</h1>
+          <p className="text-[11px] font-mono text-indigo-400 tracking-widest mt-1 uppercase">COMMAND CENTER LOGIN</p>
         </div>
 
-        <div className="bg-[#0B101E] border border-[#151D33] rounded-xl p-6 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="bg-[#0B101E] border border-[#18233C] rounded-2xl p-8 shadow-2xl shadow-black/60">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-[11px] font-mono text-slate-400 mb-1" htmlFor="email">Academic ID / Email</label>
+              <label className="text-xs font-semibold text-slate-300 mb-1.5 block tracking-wide" htmlFor="email">Academic ID / Email</label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-                  <CreditCard size={16} />
-                </span>
+                <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input 
                   id="email"
                   type="text" 
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setErrors(p => ({...p, email: ''})); }}
                   placeholder="ID or Email" 
-                  className={`w-full rounded bg-white text-slate-950 text-sm py-2 pl-10 pr-3 border ${errors.email ? 'border-rose-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow`}
+                  className={`w-full h-12 text-sm bg-[#070B13] border ${errors.email ? 'border-rose-500 focus:border-rose-500' : 'border-[#1E2C4A] focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'} outline-none text-slate-100 placeholder-slate-500 rounded-xl pl-11 pr-4 transition-all duration-200`}
                 />
               </div>
+              {errors.email && <p className="mt-1.5 text-xs text-rose-500 font-medium">{errors.email}</p>}
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-slate-400 mb-1" htmlFor="password">Password</label>
+              <label className="text-xs font-semibold text-slate-300 mb-1.5 block tracking-wide" htmlFor="password">Password</label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-                  <Lock size={16} />
-                </span>
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input 
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setErrors(p => ({...p, password: ''})); }}
                   placeholder="••••••••" 
-                  className={`w-full rounded bg-white text-slate-950 text-sm py-2 pl-10 pr-10 border ${errors.password ? 'border-rose-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow`}
+                  className={`w-full h-12 text-sm bg-[#070B13] border ${errors.password ? 'border-rose-500 focus:border-rose-500' : 'border-[#1E2C4A] focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'} outline-none text-slate-100 placeholder-slate-500 rounded-xl pl-11 pr-12 transition-all duration-200`}
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600">
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-4 flex items-center text-slate-500 hover:text-slate-300 transition-colors">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+              {errors.password && <p className="mt-1.5 text-xs text-rose-500 font-medium">{errors.password}</p>}
             </div>
 
-            <div className="flex items-center pt-1 pb-2">
+            <div className="flex items-center gap-2.5 pt-1">
               <input 
                 id="biometric" 
                 type="checkbox" 
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded bg-[#151D33] border-[#2A3755] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-[#0B101E] cursor-pointer"
+                className="w-4 h-4 rounded bg-[#070B13] border-[#1E2C4A] text-indigo-650 focus:ring-indigo-500 focus:ring-offset-[#0B101E] cursor-pointer"
               />
-              <label htmlFor="biometric" className="ml-2 flex items-center text-xs text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors">
+              <label htmlFor="biometric" className="flex items-center text-xs font-medium text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors">
                 <Fingerprint size={14} className="mr-1.5 text-indigo-400" />
                 Enable Biometric Auth
               </label>
@@ -115,21 +113,21 @@ export default function LoginPage() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-[#313C78] hover:bg-[#3D4B96] text-white rounded-md py-2 text-sm font-semibold transition-colors disabled:opacity-50"
+              className="w-full h-12 py-3 rounded-xl bg-[#3B49DF] hover:bg-indigo-500 font-bold text-sm text-white shadow-lg shadow-indigo-600/30 transition-all disabled:opacity-50 flex items-center justify-center"
             >
               Authenticate
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-[#141C2E]">
-            <p className="text-center text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-3">Demo Access</p>
-            <div className="grid grid-cols-3 gap-2">
+          <div className="mt-6 pt-4 border-t border-[#162039]">
+            <p className="text-[10px] font-mono uppercase tracking-widest text-slate-500 text-center mb-3">Demo Access</p>
+            <div className="grid grid-cols-3 gap-2.5">
               {DEMO_ACCOUNTS.map((acc) => (
                 <button
                   key={acc.role}
                   onClick={() => handleDemoLogin(acc.role)}
                   disabled={loading}
-                  className="px-2 py-1.5 rounded-md bg-[#151D33] hover:bg-[#1E293B] text-xs font-medium text-slate-300 transition-colors border border-[#2A3755]"
+                  className="h-9 rounded-lg bg-[#10172A] border border-[#1E2C4A] text-slate-300 hover:text-white hover:bg-[#18233C] text-xs font-semibold transition flex items-center justify-center"
                 >
                   {acc.label}
                 </button>
@@ -138,11 +136,9 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="mt-8 text-center flex flex-col items-center justify-center text-rose-500/80">
-          <AlertTriangle size={20} className="mb-2" />
-          <p className="text-[10px] font-mono tracking-widest font-semibold uppercase">
-            Authorized Personnel Only
-          </p>
+        <div className="mt-8 flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-500 tracking-widest">
+          <AlertTriangle size={14} className="text-amber-500 animate-pulse" />
+          <span>AUTHORIZED PERSONNEL ONLY</span>
         </div>
       </div>
     </div>
