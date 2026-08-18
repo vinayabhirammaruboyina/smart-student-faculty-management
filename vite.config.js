@@ -2,11 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react(),
-  ],
-  base: '/smart-student-faculty-management/',
+export default defineConfig(({ mode }) => {
+  return {
+    plugins: [
+      tailwindcss(),
+      react(),
+    ],
+    base: mode === 'production' ? '/smart-student-faculty-management/' : '/',
+  }
 })
+
 

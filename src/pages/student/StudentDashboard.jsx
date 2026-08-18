@@ -23,8 +23,8 @@ export default function StudentDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const attendance = studentAttendanceData['STU001'];
-  const grades = studentGradesData['STU001'];
+  const attendance = studentAttendanceData['STU-001'];
+  const grades = studentGradesData['STU-001'];
   const pendingAssignments = mockAssignments.filter(a => a.status === 'pending');
   const overdueAssignments = mockAssignments.filter(a => a.status === 'overdue');
   const submittedAssignments = mockAssignments.filter(a => a.status === 'submitted');

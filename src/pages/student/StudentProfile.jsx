@@ -13,8 +13,8 @@ export default function StudentProfile() {
   const { user, updateProfile } = useAuth();
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ name: user?.name || '', phone: user?.phone || '', email: user?.email || '' });
-  const grades = studentGradesData['STU001'];
-  const attendance = studentAttendanceData['STU001'];
+  const grades = studentGradesData['STU-001'];
+  const attendance = studentAttendanceData['STU-001'];
   const handleSave = () => { updateProfile(form); setEditing(false); toast.success('Profile updated!'); };
 
   return (

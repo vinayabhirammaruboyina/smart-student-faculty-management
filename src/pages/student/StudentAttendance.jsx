@@ -6,7 +6,7 @@ import { studentAttendanceData } from '../../data/students';
 import { AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function StudentAttendance() {
-  const data = studentAttendanceData['STU001'];
+  const data = studentAttendanceData['STU-001'];
   return (
     <div className="space-y-6 max-w-5xl">
       <div><h2 className="text-xl font-bold text-slate-900 dark:text-white">Attendance Overview</h2><p className="text-sm text-slate-400">Semester VII · Academic Year 2026–27</p></div>

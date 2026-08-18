@@ -28,7 +28,7 @@ export default function StudentLeave() {
     setSubmitting(true);
     await new Promise(r => setTimeout(r, 1000));
     const days = Math.max(1, Math.ceil((new Date(form.toDate) - new Date(form.fromDate)) / (1000 * 60 * 60 * 24)) + 1);
-    setApplications(prev => [{ id: `LVE${Date.now()}`, studentId: 'STU001', studentName: 'Vinay Abhiram', type: form.type, fromDate: form.fromDate, toDate: form.toDate, days, reason: form.reason, description: form.description, status: 'pending', approvedBy: null, appliedOn: new Date().toISOString().split('T')[0], document: form.document?.name || null }, ...prev]);
+    setApplications(prev => [{ id: `LVE${Date.now()}`, studentId: 'STU-001', studentName: 'Vinay Abhiram', type: form.type, fromDate: form.fromDate, toDate: form.toDate, days, reason: form.reason, description: form.description, status: 'pending', approvedBy: null, appliedOn: new Date().toISOString().split('T')[0], document: form.document?.name || null }, ...prev]);
     setSubmitting(false); setShowForm(false); setForm({ type: '', fromDate: '', toDate: '', reason: '', description: '', document: null });
     toast.success('Leave application submitted successfully!');
   };

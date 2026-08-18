@@ -7,7 +7,7 @@ import { TrendingUp } from 'lucide-react';
 const GRADE_BADGE = { 'A+': 'success', A: 'success', 'A-': 'success', 'B+': 'info', B: 'info', 'B-': 'primary', 'C+': 'warning', C: 'warning', D: 'danger', F: 'danger' };
 
 export default function StudentGrades() {
-  const data = studentGradesData['STU001'];
+  const data = studentGradesData['STU-001'];
   const marksData = data.subjects.map(s => ({ name: s.code, internal: s.internal, assignment: s.assignment, attendance: s.attendance }));
 
   return (
