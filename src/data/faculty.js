@@ -1,0 +1,7 @@
+export const mockFaculty = [
+  { id: 'FAC001', name: 'Dr. Priya Sharma', employeeId: 'EMP2019042', email: 'priya.sharma@pica.edu', phone: '+91 98765 11111', department: 'Computer Applications', designation: 'Assistant Professor', subjects: ['Web Engineering', 'Software Testing'], totalStudents: 124, classesToday: 3, status: 'active' },
+  { id: 'FAC002', name: 'Prof. Anil Patel', employeeId: 'EMP2018033', email: 'anil.patel@pica.edu', phone: '+91 98765 22222', department: 'Computer Applications', designation: 'Associate Professor', subjects: ['Artificial Intelligence', 'Machine Learning'], totalStudents: 98, classesToday: 2, status: 'active' },
+  { id: 'FAC003', name: 'Dr. Sunita Rao', employeeId: 'EMP2020015', email: 'sunita.rao@pica.edu', phone: '+91 98765 33333', department: 'Computer Applications', designation: 'Assistant Professor', subjects: ['Database Management', 'Cloud Computing'], totalStudents: 115, classesToday: 4, status: 'active' },
+  { id: 'FAC004', name: 'Prof. Rajan Mehta', employeeId: 'EMP2017088', email: 'rajan.mehta@pica.edu', phone: '+91 98765 44444', department: 'Computer Applications', designation: 'Professor', subjects: ['Data Structures', 'Algorithms'], totalStudents: 142, classesToday: 2, status: 'active' },
+  { id: 'FAC005', name: 'Dr. Kavita Joshi', employeeId: 'EMP2021007', email: 'kavita.joshi@pica.edu', phone: '+91 98765 55555', department: 'Computer Applications', designation: 'Assistant Professor', subjects: ['Operating Systems', 'Computer Networks'], totalStudents: 88, classesToday: 3, status: 'inactive' },
+];
